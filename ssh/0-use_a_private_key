@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-
+# an ssh command to connect to a remote server with ssh
 
 ssh -i ~/.ssh/school ubuntu@8.8.8.8
