@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-
-ssh-keygen -t rsa  -b 4096 -f school -N "betty"
+SCRIPT_DIR="$(pwd)"
+ssh-keygen -t rsa  -b 4096 -f $SCRIPT_DIR/school -N "betty"
