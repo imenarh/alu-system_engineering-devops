@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-ssh-keygen -t rsa -b 4096 -f school -N "betty"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TARGET_KEY="$SCRIPT_DIR/school"
+
+rm -f "$TARGET_KEY" "$TARGET_KEY.pub"
+ssh-keygen -q -t rsa -b 4096 -f "$TARGET_KEY" -N "betty"
