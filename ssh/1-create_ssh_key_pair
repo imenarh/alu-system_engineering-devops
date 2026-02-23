@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-SCRIPT_DIR="$(pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 ssh-keygen -t rsa  -b 4096 -f $SCRIPT_DIR/school -N "betty"
