@@ -28,4 +28,9 @@ server {
 }
 EOF
 
-service nginx restart
+nginx -t
+if [ "$(pgrep nginx)" ]; then
+    nginx -s reload
+else
+    nginx
+fi
