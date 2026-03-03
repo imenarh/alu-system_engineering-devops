@@ -4,6 +4,16 @@ apt-get update -y
 apt-get install -y nginx
 echo "Holberton School" > /var/www/html/index.html
 echo "Ceci n'est pas une page" > /var/www/html/404.html
-sed -i '/server_name _;/a \\terror_page 404 /404.html;' /etc/nginx/sites-available/default
-sed -i '/server_name _;/a \\trewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+echo "server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	root /var/www/html;
+	index index.html;
+	server_name _;
+	error_page 404 /404.html;
+	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+	location / {
+		try_files \$uri \$uri/ =404;
+	}
+}" > /etc/nginx/sites-available/default
 service nginx restart
