@@ -5,6 +5,7 @@ sudo apt-get update -y
 sudo apt-get install -y nginx
 
 sudo touch /var/www/html/index.html
+echo "Holberton School"
 echo "Holberton School" > /var/www/html/index.html
 
 sudo service nginx restart
