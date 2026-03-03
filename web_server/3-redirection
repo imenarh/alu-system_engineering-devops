@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
-# Configures Nginx with a 301 redirect and custom 404 page
+# Configures Nginx with a 301 redirect and a custom 404 page
 
 apt-get update -y
 apt-get install -y nginx
 
-# Create custom 404 page
+# Set the default page content
+echo "Holberton School" > /var/www/html/index.html
+
+# Create the custom 404 page
 echo "Ceci n'est pas une page" > /var/www/html/404.html
 
+# Write the full nginx config (avoids fragile sed)
 cat > /etc/nginx/sites-available/default << 'EOF'
 server {
         listen 80 default_server;
@@ -28,9 +32,4 @@ server {
 }
 EOF
 
-nginx -t
-if [ "$(pgrep nginx)" ]; then
-    nginx -s reload
-else
-    nginx
-fi
+service nginx restart
