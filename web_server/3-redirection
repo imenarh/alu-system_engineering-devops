@@ -6,7 +6,7 @@ apt-get install -y nginx
 
 echo "Holberton School" > /var/www/html/index.html
 
-# Insert redirect rule before the existing location block using sed
-sed -i '/server_name _;/a \\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}' /etc/nginx/sites-available/default
+# Add redirect rule before the first location / block
+sed -i '0,/location \/ {/s//location \/redirect_me {\n\t\treturn 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;\n\t}\n\n\tlocation \/ {/' /etc/nginx/sites-available/default
 
 service nginx restart
