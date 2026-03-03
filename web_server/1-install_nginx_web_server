@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 # Installs and configures Nginx to return "Holberton School" at root
 
-sudo apt-get update -y
-sudo apt-get install -y nginx
-
-sudo touch /var/www/html/index.html
-echo "Holberton School"
+apt-get update -y
+apt-get install -y nginx
 echo "Holberton School" | sudo tee /var/www/html/index.html > /dev/null
-
-sudo service nginx restart
+echo "Holberton School" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+service nginx restart 
