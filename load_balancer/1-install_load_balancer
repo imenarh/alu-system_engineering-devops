@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Installs and configures HAProxy
 
-apt-get update -y
-apt-get install -y haproxy
+sudo apt-get update -y
+sudo apt-get install -y haproxy
 
-sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
+sudo sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
 
-cat > /etc/haproxy/haproxy.cfg << 'EOF'
+sudo cat > /etc/haproxy/haproxy.cfg << 'EOF'
 global
         log /dev/log    local0
         log /dev/log    local1 notice
@@ -36,4 +36,4 @@ backend backend_cluster
     server 6987-web-02 3.82.213.44:80 check
 EOF
 
-service haproxy restart
+sudo service haproxy restart
