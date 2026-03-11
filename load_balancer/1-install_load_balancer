@@ -38,3 +38,4 @@ backend backend_cluster
 EOF
 
 service haproxy restart
+cat /etc/haproxy/haproxy.cfg
