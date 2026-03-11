@@ -38,3 +38,4 @@ backend backend_cluster
 EOF
 
 service haproxy restart
+echo "web-01 and web-02 configured"
