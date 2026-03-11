@@ -1,18 +1,27 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2154
-# Configuring nginx with 
+# Configures a new Ubuntu machine by installing Nginx listening on port 80
+# with a custom X-Served-By HTTP response header set to the server's hostname
 
-sudo apt update -y
-sudo apt install nginx -y
-new_config=\
-"server {
+sudo apt-get update -y
+sudo apt-get install -y nginx
+
+sudo tee /etc/nginx/sites-available/default > /dev/null << 'EOF'
+server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
+
 	root /var/www/html;
 	index index.html index.htm index.nginx-debian.html;
+
 	server_name _;
-	add_header X-Served-By $(hostname);
+
+	add_header X-Served-By $hostname;
+
+	location / {
+		try_files $uri $uri/ =404;
+	}
 }
-"
-echo "$new_config" | sudo tee /etc/nginx/sites-available/default > /dev/null
+EOF
+
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo service nginx restart
