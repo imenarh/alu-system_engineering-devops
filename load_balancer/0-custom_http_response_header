@@ -5,15 +5,7 @@
 apt update -y
 apt install nginx -y
 
-new_config=\
-"server {
-    listen 80 default_server;
-    server_name _;
 
-    root /var/www/html;
-    index index.html;
-    add_header X-Served-By $(hostname);
-}"
+sed -i '/server_name _;/a\\tadd_header X-Served-By $hostname;' /etc/nginx/sites-available/default
 
-echo "$new_config" | sudo tee /etc/nginx/sites-available/default > /dev/null
 service nginx restart
