@@ -2,9 +2,9 @@
 # Configures Nginx with a custom X-Served-By response header
 # shellcheck disable=SC2154
 
-apt update -y
-apt install nginx -y
+apt-get update -y
+apt-get install -y nginx
 
-sed -i '/http {/a \\tadd_header X-Served-By $hostname;' /etc/nginx/nginx.conf
+sed -i '/server_name _;/a\\tadd_header X-Served-By $hostname;' /etc/nginx/sites-available/default
 
 service nginx restart

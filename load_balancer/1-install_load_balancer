@@ -2,21 +2,39 @@
 # Installs and configures HAProxy on a new Ubuntu machine
 # to distribute traffic to web-01 and web-02 using roundrobin
 
-sudo apt-get update
-sudo apt-get -y install haproxy
+apt-get update -y
+apt-get install -y haproxy
 
-# Enable HAProxy to be managed via init script
-sudo sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
+sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
 
-# Configure HAProxy frontend and backend
-sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null <<EOF
+cat > /etc/haproxy/haproxy.cfg << 'EOF'
+global
+        log /dev/log    local0
+        log /dev/log    local1 notice
+        chroot /var/lib/haproxy
+        stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
+        stats timeout 30s
+        user haproxy
+        group haproxy
+        daemon
+
+defaults
+        log     global
+        mode    http
+        option  httplog
+        option  dontlognull
+        timeout connect 5000
+        timeout client  50000
+        timeout server  50000
+
 frontend frontend_cluster
     bind *:80
     default_backend backend_cluster
+
 backend backend_cluster
     balance roundrobin
-    server 7028-web-01 44.211.76.97:80 check
-    server 7028-web-02 13.218.144.213:80 check
+    server 6987-web-01 13.218.71.202:80 check
+    server 6987-web-02 3.82.213.44:80 check
 EOF
 
-sudo service haproxy restart
+service haproxy restart
