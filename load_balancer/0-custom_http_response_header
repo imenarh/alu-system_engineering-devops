@@ -2,8 +2,8 @@
 # Configures Nginx with a custom X-Served-By response header
 # shellcheck disable=SC2154
 
-sudo apt update -y
-sudo apt install nginx -y
+apt update -y
+apt install nginx -y
 
 new_config=\
 "server {
@@ -16,4 +16,4 @@ new_config=\
 }"
 
 echo "$new_config" | sudo tee /etc/nginx/sites-available/default > /dev/null
-sudo service nginx restart
+service nginx restart
