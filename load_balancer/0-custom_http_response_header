@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2154
 # Configures a new Ubuntu machine by installing Nginx listening on port 80
 # with a custom X-Served-By HTTP response header set to the server's hostname
 
-sudo apt-get update -y
+sudo apt-get update -y && sudo apt-get upgrade -y
 sudo apt-get install -y nginx
+
+sudo mkdir -p /var/www/html
+echo "Holberton School" | sudo tee /var/www/html/index.html > /dev/null
 
 sudo tee /etc/nginx/sites-available/default > /dev/null << 'EOF'
 server {
@@ -15,7 +19,7 @@ server {
 
 	server_name _;
 
-	add_header X-Served-By $hostname;
+	add_header X-Served-By $hostname always;
 
 	location / {
 		try_files $uri $uri/ =404;
